@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/Professional-Competency-Graph-Quick-Demo/static/css/main.551816ac.css",
+    "main.js": "/Professional-Competency-Graph-Quick-Demo/static/js/main.0b496cf3.js",
+    "index.html": "/Professional-Competency-Graph-Quick-Demo/index.html",
+    "main.551816ac.css.map": "/Professional-Competency-Graph-Quick-Demo/static/css/main.551816ac.css.map",
+    "main.0b496cf3.js.map": "/Professional-Competency-Graph-Quick-Demo/static/js/main.0b496cf3.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.551816ac.css",
+    "static/js/main.0b496cf3.js"
+  ]
+}
