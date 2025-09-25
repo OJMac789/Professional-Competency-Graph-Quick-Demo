@@ -1,0 +1,342 @@
+import React, { useState, useEffect } from 'react';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, Legend } from 'recharts';
+import { Play, Users, Brain, TrendingUp, Award, Clock, CheckCircle, AlertCircle, User, Calendar } from 'lucide-react';
+
+const CompetencyGraphDemo = () => {
+  const [activeTab, setActiveTab] = useState('realtime');
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [analysisProgress, setAnalysisProgress] = useState(0);
+
+  const meetingTranscript = `
+[10:32] OJ MacDonald: "Danielle, let's walk through this complaint about 299 Main Street. What's your first step?"
+
+[10:33] Danielle Chen: "I'd check ArcGIS to verify the property location and ownership details."
+
+[10:33] OJ MacDonald: "Perfect. Now, here's where we develop investigative thinking - don't just look at the property in question. Check the surrounding area, look for patterns. What do you notice about the regulatory boundaries?"
+
+[10:35] Danielle Chen: "The property seems to be right on the edge between the pink and gray zones..."
+
+[10:35] OJ MacDonald: "Excellent observation. That uncertainty is exactly what creates citizen confusion. Now, before we take any action, let's research the complainant's history. We build context first, then respond. This approach prevents miscommunication and shows due diligence."
+  `;
+
+  const competencyExtractions = [
+    { timestamp: '10:33', competency: 'Coaching & Development', confidence: 95, evidence: 'Guided questioning technique to develop analytical thinking' },
+    { timestamp: '10:33', competency: 'Systems Thinking', confidence: 92, evidence: 'Emphasized pattern recognition and contextual analysis' },
+    { timestamp: '10:35', competency: 'Crisis Leadership', confidence: 89, evidence: 'Structured approach to uncertainty and stakeholder management' },
+    { timestamp: '10:35', competency: 'Emotional Intelligence', confidence: 87, evidence: 'Recognized citizen perspective and communication challenges' }
+  ];
+
+  const competencyTrends = [
+    { month: 'Jan', leadership: 78, technical: 82, emotional: 75 },
+    { month: 'Feb', leadership: 81, technical: 85, emotional: 78 },
+    { month: 'Mar', leadership: 83, technical: 87, emotional: 82 },
+    { month: 'Apr', leadership: 87, technical: 89, emotional: 85 },
+    { month: 'May', leadership: 90, technical: 91, emotional: 88 },
+    { month: 'Jun', leadership: 92, technical: 93, emotional: 91 }
+  ];
+
+  const radarData = [
+    { competency: 'Strategic Thinking', current: 92, target: 95 },
+    { competency: 'Team Leadership', current: 88, target: 90 },
+    { competency: 'Technical Expertise', current: 94, target: 95 },
+    { competency: 'Communication', current: 86, target: 92 },
+    { competency: 'Crisis Management', current: 95, target: 95 },
+    { competency: 'Innovation', current: 91, target: 93 }
+  ];
+
+  const advancementEvidence = [
+    { date: '2024-06-15', activity: 'Crisis Leadership in Stakeholder Conflict', impact: 'High', evidence: 'Successfully mediated regulatory dispute, demonstrated systems thinking' },
+    { date: '2024-06-10', activity: 'Mentoring Session - Technical Training', impact: 'High', evidence: 'Advanced coaching techniques, developed team analytical capabilities' },
+    { date: '2024-06-05', activity: 'Policy Analysis Meeting', impact: 'Medium', evidence: 'Pattern recognition identified regulatory inconsistencies' },
+    { date: '2024-05-28', activity: 'Cross-Ministry Collaboration', impact: 'High', evidence: 'Emotional intelligence facilitated complex stakeholder alignment' }
+  ];
+
+  useEffect(() => {
+    let interval;
+    if (isPlaying && analysisProgress < 100) {
+      interval = setInterval(() => {
+        setAnalysisProgress(prev => Math.min(prev + 2, 100));
+      }, 100);
+    }
+    return () => clearInterval(interval);
+  }, [isPlaying, analysisProgress]);
+
+  const startAnalysis = () => {
+    setIsPlaying(true);
+    setAnalysisProgress(0);
+  };
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-6">
+      <div className="max-w-7xl mx-auto">
+        {/* Header */}
+        <div className="bg-white rounded-xl shadow-lg p-6 mb-6">
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-3xl font-bold text-gray-900 mb-2">Professional Competency Graph System</h1>
+              <p className="text-gray-600">AI-Powered Government Professional Development</p>
+            </div>
+            <div className="flex items-center space-x-4">
+              <div className="text-right">
+                <p className="text-sm text-gray-500">Analyzing Meeting</p>
+                <p className="font-semibold">NEC Training Session</p>
+              </div>
+              <Brain className="text-blue-600 w-8 h-8" />
+            </div>
+          </div>
+        </div>
+
+        {/* Navigation Tabs */}
+        <div className="bg-white rounded-xl shadow-lg mb-6">
+          <div className="flex border-b">
+            {[
+              { id: 'realtime', label: 'Real-Time Analysis', icon: Play },
+              { id: 'trends', label: 'Competency Trends', icon: TrendingUp },
+              { id: 'profile', label: 'Professional Profile', icon: User },
+              { id: 'advancement', label: 'Advancement Evidence', icon: Award }
+            ].map(({ id, label, icon: Icon }) => (
+              <button
+                key={id}
+                onClick={() => setActiveTab(id)}
+                className={`flex items-center space-x-2 px-6 py-4 font-medium transition-colors ${
+                  activeTab === id
+                    ? 'border-b-2 border-blue-600 text-blue-600 bg-blue-50'
+                    : 'text-gray-600 hover:text-blue-600 hover:bg-gray-50'
+                }`}
+              >
+                <Icon size={20} />
+                <span>{label}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Real-Time Analysis Tab */}
+        {activeTab === 'realtime' && (
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {/* Meeting Transcript */}
+            <div className="bg-white rounded-xl shadow-lg p-6">
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-xl font-bold text-gray-900">Meeting Transcript</h2>
+                <button
+                  onClick={startAnalysis}
+                  className="flex items-center space-x-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+                >
+                  <Play size={16} />
+                  <span>Analyze Competencies</span>
+                </button>
+              </div>
+              <div className="bg-gray-50 rounded-lg p-4 h-64 overflow-y-auto">
+                <pre className="text-sm text-gray-700 whitespace-pre-wrap">{meetingTranscript}</pre>
+              </div>
+              {analysisProgress > 0 && (
+                <div className="mt-4">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-sm text-gray-600">AI Analysis Progress</span>
+                    <span className="text-sm font-medium text-blue-600">{analysisProgress}%</span>
+                  </div>
+                  <div className="w-full bg-gray-200 rounded-full h-2">
+                    <div
+                      className="bg-blue-600 h-2 rounded-full transition-all duration-300"
+                      style={{ width: `${analysisProgress}%` }}
+                    />
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Live Competency Extraction */}
+            <div className="bg-white rounded-xl shadow-lg p-6">
+              <h2 className="text-xl font-bold text-gray-900 mb-4">Detected Competencies</h2>
+              <div className="space-y-4">
+                {competencyExtractions.map((item, index) => (
+                  <div
+                    key={index}
+                    className={`p-4 rounded-lg border-l-4 transition-all duration-500 ${
+                      analysisProgress > (index + 1) * 25
+                        ? 'border-green-500 bg-green-50 opacity-100'
+                        : 'border-gray-300 bg-gray-50 opacity-50'
+                    }`}
+                  >
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="font-semibold text-gray-900">{item.competency}</span>
+                      <div className="flex items-center space-x-2">
+                        <span className="text-sm text-gray-500">{item.timestamp}</span>
+                        <span className={`px-2 py-1 rounded text-xs font-medium ${
+                          item.confidence >= 90 ? 'bg-green-100 text-green-800' :
+                          item.confidence >= 80 ? 'bg-yellow-100 text-yellow-800' :
+                          'bg-red-100 text-red-800'
+                        }`}>
+                          {item.confidence}%
+                        </span>
+                      </div>
+                    </div>
+                    <p className="text-sm text-gray-600">{item.evidence}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Competency Trends Tab */}
+        {activeTab === 'trends' && (
+          <div className="grid grid-cols-1 gap-6">
+            <div className="bg-white rounded-xl shadow-lg p-6">
+              <h2 className="text-xl font-bold text-gray-900 mb-6">Competency Development Over Time</h2>
+              <ResponsiveContainer width="100%" height={400}>
+                <LineChart data={competencyTrends}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="month" />
+                  <YAxis domain={[70, 100]} />
+                  <Tooltip />
+                  <Legend />
+                  <Line type="monotone" dataKey="leadership" stroke="#3B82F6" strokeWidth={3} name="Leadership" />
+                  <Line type="monotone" dataKey="technical" stroke="#10B981" strokeWidth={3} name="Technical Expertise" />
+                  <Line type="monotone" dataKey="emotional" stroke="#F59E0B" strokeWidth={3} name="Emotional Intelligence" />
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
+        )}
+
+        {/* Professional Profile Tab */}
+        {activeTab === 'profile' && (
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {/* Competency Radar */}
+            <div className="bg-white rounded-xl shadow-lg p-6">
+              <h2 className="text-xl font-bold text-gray-900 mb-4">Competency Profile</h2>
+              <ResponsiveContainer width="100%" height={400}>
+                <RadarChart data={radarData}>
+                  <PolarGrid />
+                  <PolarAngleAxis dataKey="competency" />
+                  <PolarRadiusAxis angle={90} domain={[0, 100]} />
+                  <Radar name="Current Level" dataKey="current" stroke="#3B82F6" fill="#3B82F6" fillOpacity={0.3} strokeWidth={2} />
+                  <Radar name="Target Level" dataKey="target" stroke="#10B981" fill="none" strokeDasharray="5 5" strokeWidth={2} />
+                  <Legend />
+                </RadarChart>
+              </ResponsiveContainer>
+            </div>
+
+            {/* Key Insights */}
+            <div className="bg-white rounded-xl shadow-lg p-6">
+              <h2 className="text-xl font-bold text-gray-900 mb-4">AI-Generated Insights</h2>
+              <div className="space-y-4">
+                <div className="p-4 bg-blue-50 rounded-lg border-l-4 border-blue-500">
+                  <div className="flex items-center space-x-2 mb-2">
+                    <CheckCircle className="text-blue-600 w-5 h-5" />
+                    <span className="font-semibold text-blue-800">Strength Identified</span>
+                  </div>
+                  <p className="text-blue-700 text-sm">Exceptional crisis management and pattern recognition capabilities consistently demonstrated across meetings. Ready for senior leadership roles requiring analytical decision-making.</p>
+                </div>
+
+                <div className="p-4 bg-green-50 rounded-lg border-l-4 border-green-500">
+                  <div className="flex items-center space-x-2 mb-2">
+                    <TrendingUp className="text-green-600 w-5 h-5" />
+                    <span className="font-semibold text-green-800">Growth Trajectory</span>
+                  </div>
+                  <p className="text-green-700 text-sm">Communication competency showing 18% improvement over 6 months through mentoring activities. Coaching others accelerating personal development.</p>
+                </div>
+
+                <div className="p-4 bg-yellow-50 rounded-lg border-l-4 border-yellow-500">
+                  <div className="flex items-center space-x-2 mb-2">
+                    <AlertCircle className="text-yellow-600 w-5 h-5" />
+                    <span className="font-semibold text-yellow-800">Development Opportunity</span>
+                  </div>
+                  <p className="text-yellow-700 text-sm">Strategic thinking competency could benefit from cross-ministry exposure. Recommend participation in policy development initiatives.</p>
+                </div>
+
+                <div className="p-4 bg-purple-50 rounded-lg border-l-4 border-purple-500">
+                  <div className="flex items-center space-x-2 mb-2">
+                    <Brain className="text-purple-600 w-5 h-5" />
+                    <span className="font-semibold text-purple-800">Neurodivergent Strengths</span>
+                  </div>
+                  <p className="text-purple-700 text-sm">ADHD-associated pattern recognition and hyperfocus capabilities creating competitive advantage in complex regulatory analysis. Leverage for strategic assignments.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Advancement Evidence Tab */}
+        {activeTab === 'advancement' && (
+          <div className="bg-white rounded-xl shadow-lg p-6">
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-xl font-bold text-gray-900">Advancement Package Evidence</h2>
+              <button className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors">
+                Generate Advancement Package
+              </button>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+              <div className="bg-blue-50 p-4 rounded-lg">
+                <div className="flex items-center space-x-2 mb-2">
+                  <Users className="text-blue-600 w-6 h-6" />
+                  <span className="font-semibold text-blue-800">Leadership Evidence</span>
+                </div>
+                <p className="text-2xl font-bold text-blue-600">23</p>
+                <p className="text-blue-700 text-sm">Documented instances</p>
+              </div>
+
+              <div className="bg-green-50 p-4 rounded-lg">
+                <div className="flex items-center space-x-2 mb-2">
+                  <Clock className="text-green-600 w-6 h-6" />
+                  <span className="font-semibold text-green-800">Time Saved</span>
+                </div>
+                <p className="text-2xl font-bold text-green-600">15 hrs</p>
+                <p className="text-green-700 text-sm">Documentation prep</p>
+              </div>
+
+              <div className="bg-purple-50 p-4 rounded-lg">
+                <div className="flex items-center space-x-2 mb-2">
+                  <Award className="text-purple-600 w-6 h-6" />
+                  <span className="font-semibold text-purple-800">Readiness Score</span>
+                </div>
+                <p className="text-2xl font-bold text-purple-600">92%</p>
+                <p className="text-purple-700 text-sm">For advancement</p>
+              </div>
+            </div>
+
+            <div className="overflow-x-auto">
+              <table className="w-full">
+                <thead>
+                  <tr className="bg-gray-50">
+                    <th className="px-4 py-3 text-left text-sm font-medium text-gray-700">Date</th>
+                    <th className="px-4 py-3 text-left text-sm font-medium text-gray-700">Activity</th>
+                    <th className="px-4 py-3 text-left text-sm font-medium text-gray-700">Impact</th>
+                    <th className="px-4 py-3 text-left text-sm font-medium text-gray-700">Evidence</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-200">
+                  {advancementEvidence.map((item, index) => (
+                    <tr key={index} className="hover:bg-gray-50">
+                      <td className="px-4 py-3 text-sm text-gray-600">
+                        <div className="flex items-center space-x-2">
+                          <Calendar className="w-4 h-4" />
+                          <span>{item.date}</span>
+                        </div>
+                      </td>
+                      <td className="px-4 py-3 text-sm font-medium text-gray-900">{item.activity}</td>
+                      <td className="px-4 py-3">
+                        <span className={`px-2 py-1 rounded text-xs font-medium ${
+                          item.impact === 'High' ? 'bg-green-100 text-green-800' :
+                          item.impact === 'Medium' ? 'bg-yellow-100 text-yellow-800' :
+                          'bg-gray-100 text-gray-800'
+                        }`}>
+                          {item.impact}
+                        </span>
+                      </td>
+                      <td className="px-4 py-3 text-sm text-gray-600">{item.evidence}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default CompetencyGraphDemo;

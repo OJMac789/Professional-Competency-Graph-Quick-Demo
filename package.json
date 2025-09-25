@@ -10,11 +10,11 @@
     "predeploy": "npm run build"
   },
   "dependencies": {
+    "lucide-react": "^0.263.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-scripts": "5.0.1",
-    "recharts": "^2.8.0",
-    "lucide-react": "^0.263.1"
+    "react-scripts": "^5.0.1",
+    "recharts": "^2.8.0"
   },
   "devDependencies": {
     "gh-pages": "^6.0.0"
@@ -31,5 +31,5 @@
       "last 1 safari version"
     ]
   },
-  "homepage": "https://yourusername.github.io/professional-competency-graph-system"
+  "homepage": "https://OJMac789.github.io/Professional-Competency-Graph-Quick-Demo"
 }
