@@ -8,13 +8,13 @@ const CompetencyGraphDemo = () => {
   const [analysisProgress, setAnalysisProgress] = useState(0);
 
   const meetingTranscript = `
-[10:32] OJ MacDonald: "Danielle, let's walk through this complaint about 299 Main Street. What's your first step?"
+[10:32] OJ MacDonald: "Team Mate, let's walk through this complaint about 123 Main Street. What's your first step?"
 
-[10:33] Danielle Chen: "I'd check ArcGIS to verify the property location and ownership details."
+[10:33] Team Mate: "I'd check ArcGIS to verify the property location and ownership details."
 
 [10:33] OJ MacDonald: "Perfect. Now, here's where we develop investigative thinking - don't just look at the property in question. Check the surrounding area, look for patterns. What do you notice about the regulatory boundaries?"
 
-[10:35] Danielle Chen: "The property seems to be right on the edge between the pink and gray zones..."
+[10:35] Team Mate: "The property seems to be right on the edge between the pink and gray zones..."
 
 [10:35] OJ MacDonald: "Excellent observation. That uncertainty is exactly what creates citizen confusion. Now, before we take any action, let's research the complainant's history. We build context first, then respond. This approach prevents miscommunication and shows due diligence."
   `;
