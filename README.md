@@ -6,7 +6,7 @@
 
 ## 🚀 Live Demo
 
-**[View Interactive Demo](https://yourusername.github.io/professional-competency-graph-system)**
+**[View Interactive Demo](https://OJMac789.github.io/Professional-Competency-Graph-Quick-Demo)**
 
 ## 🎯 Executive Summary
 
@@ -14,7 +14,7 @@ The Professional Competency Graph System revolutionizes government workforce dev
 
 ### Key Capabilities
 
-- **Real-time competency extraction** from meeting transcripts using Microsoft Fabric AI
+- **Real-time competency extraction** from meeting transcripts using Microsoft Fabric AI with future state goals to include FORTE and HR related datastreams.
 - **Dynamic professional development tracking** with competency evolution over time
 - **Automated advancement evidence generation** reducing documentation time by 70%
 - **Neurodivergent-optimized design** recognizing pattern recognition and analytical strengths
